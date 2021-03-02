@@ -37,6 +37,9 @@ public class XadrezPartida {
 		if(!tabuleiro.haUmaPeca(posicao)) {
 			throw new XadrezExecao("Nao exite peça na posicao de inicial");
 		}
+		if (!tabuleiro.peca(posicao).haAlgumMovimentoPossivel()) {
+			throw new XadrezExecao("Nao exite movimento possivel para essa peca");
+		}
 	}
 	
 	private static Peca fazerMovimento(Posicao inicial, Posicao destino) {
