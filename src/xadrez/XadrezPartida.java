@@ -1,5 +1,8 @@
 package xadrez;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import placajogo.Peca;
 import placajogo.Posicao;
 import placajogo.Tabuleiro;
@@ -11,6 +14,9 @@ public class XadrezPartida {
 	private static int turno;
 	private static Cor jogadorCorrente;
 	private static Tabuleiro tabuleiro;
+	
+	private static List<Peca> pecasNoTabuleiro = new ArrayList<>();
+	private static List<Peca> pecascapturadas = new ArrayList<>();
 	
 	public XadrezPartida() {
 		tabuleiro = new Tabuleiro(8, 8);
@@ -58,16 +64,16 @@ public class XadrezPartida {
 			throw new XadrezExecao("Nao exite peca na posicao inicial Cavalo !");
 		}
 		if(jogadorCorrente != ((XadrezPeca)tabuleiro.peca(posicao)).getCor()) {
-			throw new XadrezExecao("A peca escolhida nao e sua Rapah !");
+			throw new XadrezExecao("A peca escolhida nao e sua ); !");
 		}
 		if (!tabuleiro.peca(posicao).haAlgumMovimentoPossivel()) {
-			throw new XadrezExecao("Nao exite movimento possivel para essa peca Animal !");
+			throw new XadrezExecao("Nao exite movimento possivel para essa peca :/ !");
 		}
 	}
 	
 	private static void validarPosicaoDestino(Posicao inicial, Posicao destino) {
 		if (!tabuleiro.peca(inicial).movimentoPossivel(destino)){
-			throw new XadrezExecao(":( A peca escolhida nao pode se mover para a posicao de destino !");
+			throw new XadrezExecao(":( A peca escolhida nao pode mover para a posicao de destino !");
 		}
 	}
 	
@@ -80,11 +86,18 @@ public class XadrezPartida {
 		Peca p = tabuleiro.removerPeca(inicial);
 		Peca pecaCapturada = tabuleiro.removerPeca(destino);
 		tabuleiro.lugarpeca(p, destino);
+		
+		if(pecaCapturada != null) {
+			pecasNoTabuleiro.remove(pecaCapturada);
+			pecascapturadas.add(pecaCapturada);
+		}
+		
 		return pecaCapturada;
 	}
 	
 	private void colocarNovaPeca(char coluna, int linha, XadrezPeca peca) {
 		tabuleiro.lugarpeca(peca, new XadrezPosicao(coluna, (char) linha).paraPosicao());
+		pecasNoTabuleiro.add(peca);
 	}
 	
 	private void iniciarPartida() {
