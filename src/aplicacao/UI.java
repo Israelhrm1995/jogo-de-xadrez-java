@@ -52,16 +52,23 @@ public class UI {
 		}
 	}
 	
-	public static void imprimirPartida(XadrezPartida xadrezpartida, List<XadrezPeca> capturadas) {
-		printTabuleiro(xadrezpartida.getPecas());
+	public static void imprimirPartida(XadrezPartida xadrezPartida, List<XadrezPeca> capturadas) {
+		printTabuleiro(xadrezPartida.getPecas());
 		System.out.println();
 		imprimirPecasCapturadas(capturadas);
 		System.out.println();
-		System.out.println("Turno : " + xadrezpartida.getTurno());
-		System.out.println("Esperando jogador: " + xadrezpartida.getJogadorCorrente());
-		if(xadrezpartida.getCheck()) {
-			System.out.println("Voce esta em CHECK!");
+		System.out.println("Turno : " + xadrezPartida.getTurno());
+		if(!xadrezPartida.getCheckMate()) {
+			System.out.println("Esperando jogador: " + xadrezPartida.getJogadorCorrente());
+			if(xadrezPartida.getCheck()) {
+				System.out.println("Voce esta em CHECK!");
+			}
+		} 
+		else {
+			System.out.println("CHECKMATE!");
+			System.out.println("Vencedor: " + xadrezPartida.getJogadorCorrente());
 		}
+		
 	}
 
 	public static void printTabuleiro(XadrezPeca[][] pecas) {
