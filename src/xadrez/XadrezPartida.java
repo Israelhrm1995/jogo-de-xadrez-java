@@ -25,6 +25,12 @@ public class XadrezPartida {
 		return matris;
 	}
 	
+	public static boolean[][] movimentosPossiveis(XadrezPosicao inicialPosicao){
+		Posicao posicao = inicialPosicao.paraPosicao();
+		validarInicialPosicao(posicao);
+		return tabuleiro.peca(posicao).movimentosPossiveis();
+		}
+	
 	public static XadrezPeca executarXadrezMovimento(XadrezPosicao inicialposicao, XadrezPosicao destinoposicao) {
 		Posicao inicial = inicialposicao.paraPosicao();
 		Posicao destino = destinoposicao.paraPosicao();
