@@ -8,13 +8,25 @@ import xadrez.pecas.Torre;
 
 public class XadrezPartida {
 	
+	private static int turno;
+	private static Cor jogadorCorrente;
 	private static Tabuleiro tabuleiro;
 	
 	public XadrezPartida() {
 		tabuleiro = new Tabuleiro(8, 8);
+		turno = 1;
+		jogadorCorrente = Cor.BRANCO;
 		iniciarPartida();
 	}
 	
+	public int getTurno() {
+		return turno;
+	}
+
+	public Cor getJogadorCorrente() {
+		return jogadorCorrente;
+	}
+
 	public XadrezPeca[][] getPecas() {
 		XadrezPeca[][] matris = new XadrezPeca[tabuleiro.getLinhas()][tabuleiro.getColunas()];
 		for (int i = 0; i < tabuleiro.getLinhas(); i++) {
@@ -37,22 +49,31 @@ public class XadrezPartida {
 		validarInicialPosicao(inicial);
 		validarPosicaoDestino(inicial, destino);
 		Peca pegandoPeca = fazerMovimento(inicial, destino);
+		proximoTurno();
 		return (XadrezPeca) pegandoPeca;
 	}
 	
 	private static void validarInicialPosicao(Posicao posicao) {
 		if(!tabuleiro.haUmaPeca(posicao)) {
-			throw new XadrezExecao("Nao exite peça na posicao de inicial");
+			throw new XadrezExecao("Nao exite peca na posicao inicial Cavalo !");
+		}
+		if(jogadorCorrente != ((XadrezPeca)tabuleiro.peca(posicao)).getCor()) {
+			throw new XadrezExecao("A peca escolhida nao e sua Rapah !");
 		}
 		if (!tabuleiro.peca(posicao).haAlgumMovimentoPossivel()) {
-			throw new XadrezExecao("Nao exite movimento possivel para essa peca");
+			throw new XadrezExecao("Nao exite movimento possivel para essa peca Animal !");
 		}
 	}
 	
 	private static void validarPosicaoDestino(Posicao inicial, Posicao destino) {
 		if (!tabuleiro.peca(inicial).movimentoPossivel(destino)){
-			throw new XadrezExecao("A peca escolhida nao pode se mover para a posicao de destino !");
+			throw new XadrezExecao(":( A peca escolhida nao pode se mover para a posicao de destino !");
 		}
+	}
+	
+	private static void proximoTurno() {
+		turno++;
+		jogadorCorrente = (jogadorCorrente == Cor.BRANCO) ? Cor.PRETO : Cor.BRANCO;
 	}
 	
 	private static Peca fazerMovimento(Posicao inicial, Posicao destino) {
